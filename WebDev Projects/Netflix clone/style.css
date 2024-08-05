@@ -79,21 +79,21 @@ nav button {
 }
 
 .separation {
-  height: 11px;
-  background-color: gray;
+  height: 7px;
+  background-color: rgb(44, 44, 44);
 }
 
 .btn {
   padding: 3px 8px;
-  font-weight: bold;
   background-color: white;
   border-radius: 5px;
+  border: 0.2px solid white;
 }
 
 .btn-red {
   background-color: red;
   color: white;
-  border: transparent;
+  border: rgba(23, 23, 23, 0.7);
   padding: 3px 24px;
   font-size: 20px;
 }
@@ -105,23 +105,135 @@ nav button {
 }
 
 .trans {
-  background-color: transparent;
+  background-color: rgba(23, 23, 23, 0.7);
   border-color: white;
   color: white;
 }
 
 .main input {
-    color: white;
-    border: transparent;
-    padding: 7px 45px 7px 7px;
-    background-color: transparent;
-    border-color: white;
-    font-size: 14px;
+  color: white;
+  border: transparent;
+  padding: 7px 45px 7px 7px;
+  background-color: rgba(23, 23, 23, 0.7);
+  border: 1px solid rgba(23, 23, 23, 0.7);
+  font-size: 14px;
 }
 
-.super-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.super-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.first{ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Noto Sans", sans-serif;
+  gap: 23px;
+  padding: 30px;
+  margin: auto;
+  max-width: 80vw;
+}
+
+.txt{
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+
+.txt > :nth-child(1){
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.txt > :nth-child(2){
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.secimg{
+  position: relative;
+  display: flex;
+}
+
+.secimg img{
+  width: 36vw;
+  z-index: 1;
+}
+
+.secimg video{
+  position: absolute;
+  top: 86px;
+  right: 77px;
+  z-index: 0;
+  width: 26.2vw;
+}
+
+.faq{
+  background-color: black;
+  color: white;
+  padding: 14px;
+}
+
+.faqbox:hover{
+  background-color: rgb(54, 54, 54);
+}
+
+.faqbox{
+  display: flex;
+  background-color: rgb(32, 32, 32);
+  color: white;
+  max-width: 51vw;
+  margin:34px auto;
+  justify-content: space-between;
+  padding: 18px;
+}
+
+.faq h2{
+  text-align: center;
+}
+
+.faq input {
+  color: white;
+  border: transparent;
+  padding: 7px 45px 7px 7px;
+  background-color: rgba(23, 23, 23, 0.7);
+  border: 1px solid rgba(23, 23, 23, 0.7);
+  font-size: 14px;
+}
+
+.rtxt{
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+footer{
+  color: white;
+  margin: auto;
+  max-width: 60vw;
+  padding: 32px 82px 82px 82px;
+}
+
+.footer a{
+  color: white;
+  font-size: 14px;
+}
+
+footer .que{
+  padding: 34px 0;
+}
+
+.footer{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  color: white;
+}
+
+.footer-item{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
