@@ -3,22 +3,18 @@ import { fetchGPTResponse } from './fetchChatGPTResponse';
 
 function App() {
   const [ingredients, setIngredients] = useState("");
-  const [recipe, setRecipe] = useState({
-    preparationMethod: "",
-    nutritionalInformations: "",
-  });
+  const [recipes, setRecipes] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  async function getRecipe() {
+  async function getRecipes() {
     setLoading(true);
     try {
       const response = await fetchGPTResponse(ingredients);
-      setRecipe(response || {
-        preparationMethod: "",
-        nutritionalInformations: "",
-      });
+      setRecipes(response || []);
+      setSelectedRecipe(null);
     } catch (error) {
-      console.error("Failed to fetch recipe:", error);
+      console.error("Failed to fetch recipes:", error);
     } finally {
       setLoading(false);
     }
@@ -33,18 +29,31 @@ function App() {
         className="w-full p-2 border border-gray-300 rounded"
       ></textarea>
       <button
-        onClick={getRecipe}
+        onClick={getRecipes}
         disabled={loading}
         className="mt-4 bg-blue-500 text-white p-2 rounded"
       >
-        {loading ? "Loading..." : "Get Recipe"}
+        {loading ? "Loading..." : "Get Recipes"}
       </button>
-      {!loading && recipe && recipe.preparationMethod && (
+      {recipes.length > 0 && (
+        <div className="mt-4">
+          <select
+            onChange={(e) => setSelectedRecipe(recipes.find(recipe => recipe.name === e.target.value))}
+            className="w-full p-2 border border-gray-300 rounded"
+          >
+            <option value="">Select a recipe</option>
+            {recipes.map(recipe => (
+              <option key={recipe.name} value={recipe.name}>{recipe.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      {selectedRecipe && (
         <div className="mt-4">
           <h2 className="font-bold">Preparation Method:</h2>
-          <p className="bg-gray-100 p-2 rounded">{recipe.preparationMethod}</p>
+          <p className="bg-gray-100 p-2 rounded">{selectedRecipe.preparationMethod}</p>
           <h2 className="font-bold mt-4">Nutritional Information:</h2>
-          <p className="bg-gray-100 p-2 rounded">{recipe.nutritionalInformations}</p>
+          <p className="bg-gray-100 p-2 rounded">{selectedRecipe.nutritionalInformations}</p>
         </div>
       )}
     </div>
