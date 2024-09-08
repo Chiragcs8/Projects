@@ -5,7 +5,7 @@ const RecipeComponent = (props) => {
   const { label, image, ingredientLines, url } = props.recipe;
 
   return (
-    <div className="flex flex-col p-4 w-72 shadow-lg rounded-lg">
+    <div className="flex flex-col p-4 w-full sm:w-72 shadow-lg rounded-lg bg-white">
       {show && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-70">
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
@@ -35,13 +35,13 @@ const RecipeComponent = (props) => {
       <img src={image} alt={label} className="object-cover h-48 rounded-lg mb-4" />
       <h2 className="text-lg font-semibold text-center">{label}</h2>
       <button
-        className="bg-green-500 text-white mt-4 py-2 rounded-lg uppercase"
+        className="bg-green-500 text-white mt-4 py-2 rounded-lg uppercase w-full"
         onClick={() => setShow(true)}
       >
         Ingredients
       </button>
       <button
-        className="bg-blue-500 text-white mt-2 py-2 rounded-lg uppercase"
+        className="bg-blue-500 text-white mt-2 py-2 rounded-lg uppercase w-full"
         onClick={() => window.open(url)}
       >
         See Complete Recipe

@@ -37,17 +37,17 @@ const AppComponent = () => {
 
   return (
     <div className="flex flex-col items-center p-4">
-      <header className="bg-black text-white w-full p-6 flex justify-between items-center shadow-md">
-        <div className="flex items-center">
+      <header className="bg-black text-white w-full p-4 flex flex-col md:flex-row items-center md:items-start justify-between md:justify-start shadow-md">
+        <div className="flex items-center mb-4 md:mb-0">
           <img src="/hamburger.svg" alt="recipe icon" className="w-9 h-9 mr-3" />
           <h1 className="text-xl font-bold">Recipe Finder</h1>
         </div>
-        <div className="flex bg-white rounded-lg p-2">
+        <div className="flex bg-white rounded-lg p-2 w-full md:w-1/2 lg:w-1/3">
           <img src="/search-icon.svg" className="w-8 h-8" alt="search" />
           <input
             type="text"
             placeholder="Search Recipe"
-            className="ml-3 outline-none text-black text-lg font-semibold"
+            className="ml-3 outline-none text-black text-lg font-semibold w-full"
             value={searchQuery}
             onChange={onTextChange}
           />
