@@ -1,65 +1,95 @@
 import React, { useState } from 'react';
 import { fetchEdamamResponse } from './fetchEdamamResponse';
+import RecipeComponent from './RecipeComponent';
 
-function App() {
-  const [ingredients, setIngredients] = useState("");
-  const [recipes, setRecipes] = useState([]);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+const AppComponent = () => {
+  const [searchQuery, updateSearchQuery] = useState('');
+  const [recipeList, updateRecipeList] = useState([]);
+  const [filteredRecipeList, setFilteredRecipeList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [timeoutId, updateTimeoutId] = useState();
+  const [filter, setFilter] = useState('all'); // Added filter state
 
-  const getRecipes = () => {
-    setLoading(true);
-    fetchEdamamResponse(ingredients)
-      .then(response => {
-        setRecipes(response || []);
-        setSelectedRecipe(null);
-      })
-      .catch(error => {
-        console.error("Failed to fetch recipes:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const onTextChange = (e) => {
+    clearTimeout(timeoutId);
+    updateSearchQuery(e.target.value);
+    const timeout = setTimeout(async () => {
+      setLoading(true);
+      const response = await fetchEdamamResponse(e.target.value);
+      updateRecipeList(response);
+      setFilteredRecipeList(filterRecipes(response, filter));
+      setLoading(false);
+    }, 500);
+    updateTimeoutId(timeout);
+  };
+
+  const handleFilterChange = (type) => {
+    setFilter(type);
+    setFilteredRecipeList(filterRecipes(recipeList, type));
+  };
+
+  const filterRecipes = (recipes, type) => {
+    if (type === 'all') return recipes;
+    return recipes.filter(recipe => 
+      type === 'vegetarian' ? recipe.recipe.healthLabels.includes('Vegetarian') : !recipe.recipe.healthLabels.includes('Vegetarian')
+    );
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-8 m-auto max-w-lg">
-      <textarea
-        value={ingredients}
-        onChange={(e) => setIngredients(e.target.value)}
-        placeholder="Enter ingredients here..."
-        className="w-full p-2 border border-gray-300 rounded"
-      ></textarea>
-      <button
-        onClick={getRecipes}
-        disabled={loading}
-        className="mt-4 bg-blue-500 text-white p-2 rounded"
-      >
-        {loading ? "Loading..." : "Get Recipes"}
-      </button>
-      {recipes.length > 0 && (
-        <div className="mt-4">
-          <select
-            onChange={(e) => setSelectedRecipe(recipes.find(recipe => recipe.name === e.target.value))}
-            className="w-full p-2 border border-gray-300 rounded"
-          >
-            <option value="">Select a recipe</option>
-            {recipes.map(recipe => (
-              <option key={recipe.name} value={recipe.name}>{recipe.name}</option>
-            ))}
-          </select>
+    <div className="flex flex-col items-center p-4">
+      <header className="bg-black text-white w-full p-6 flex justify-between items-center shadow-md">
+        <div className="flex items-center">
+          <img src="/hamburger.svg" alt="recipe icon" className="w-9 h-9 mr-3" />
+          <h1 className="text-xl font-bold">Recipe Finder</h1>
         </div>
-      )}
-      {selectedRecipe && (
-        <div className="mt-4">
-          <h2 className="font-bold">Preparation Method:</h2>
-          <p className="bg-gray-100 p-2 rounded">{selectedRecipe.preparationMethod}</p>
-          <h2 className="font-bold mt-4">Nutritional Information:</h2>
-          <p className="bg-gray-100 p-2 rounded">{selectedRecipe.nutritionalInformations}</p>
+        <div className="flex bg-white rounded-lg p-2">
+          <img src="/search-icon.svg" className="w-8 h-8" alt="search" />
+          <input
+            type="text"
+            placeholder="Search Recipe"
+            className="ml-3 outline-none text-black text-lg font-semibold"
+            value={searchQuery}
+            onChange={onTextChange}
+          />
+        </div>
+      </header>
+      <div className="mt-4 flex space-x-4">
+        <button
+          className={`px-4 py-2 rounded-lg text-white ${filter === 'all' ? 'bg-gray-700' : 'bg-gray-500'}`}
+          onClick={() => handleFilterChange('all')}
+        >
+          All
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg text-white ${filter === 'vegetarian' ? 'bg-green-600' : 'bg-green-400'}`}
+          onClick={() => handleFilterChange('vegetarian')}
+        >
+          Vegetarian
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg text-white ${filter === 'non-vegetarian' ? 'bg-red-600' : 'bg-red-400'}`}
+          onClick={() => handleFilterChange('non-vegetarian')}
+        >
+          Non-Vegetarian
+        </button>
+      </div>
+      {loading ? (
+        <div className="flex justify-center items-center h-96">
+          <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        </div>
+      ) : (
+        <div className="flex flex-wrap justify-evenly p-8 gap-8">
+          {filteredRecipeList?.length ? (
+            filteredRecipeList.map((recipe, index) => (
+              <RecipeComponent key={index} recipe={recipe.recipe} />
+            ))
+          ) : (
+            <img src="/hamburger.svg" alt="placeholder" className="w-40 h-40 opacity-50" />
+          )}
         </div>
       )}
     </div>
   );
-}
+};
 
-export default App;
+export default AppComponent;
