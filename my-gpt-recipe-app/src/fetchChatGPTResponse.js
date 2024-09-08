@@ -1,32 +1,28 @@
-const API_URL = "https://api.openai.com/v1/chat/completions";
-const API_KEY = "YOUR_API_KEY";
+export async function fetchGPTResponse(ingredients) {
+  const API_KEY = 'your-openai-api-key'; // Add your OpenAI API key here
+  const API_URL = 'https://api.openai.com/v1/chat/completions';
 
-export async function fetchGPTResponse(prompt) {
   const response = await fetch(API_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Authorization": `Bearer ${API_KEY}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${API_KEY}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo",
+      model: 'gpt-3.5-turbo',
       messages: [
         {
-          role: "system",
-          content: "You are a helpful assistant designed to output multiple recipes in JSON format."
+          role: 'system',
+          content: 'You are a helpful assistant that provides recipe suggestions based on ingredients.',
         },
         {
-          role: "user",
-          content: `Generate a list of recipes based on these ingredients: ${prompt}. Each recipe should be in the format: { name: string, preparationMethod: string, nutritionalInformations: string }`
-        }
+          role: 'user',
+          content: `Generate a list of recipes based on these ingredients: ${ingredients}. Each recipe should be in the format: { name: string, preparationMethod: string, nutritionalInformations: string }`,
+        },
       ],
     }),
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    return JSON.parse(data.choices[0].message.content);
-  } else {
-    throw new Error(`Error: ${response.status}`);
-  }
+  const data = await response.json();
+  return JSON.parse(data.choices[0].message.content);
 }
