@@ -1,6 +1,6 @@
-export async function fetchGPTResponse(ingredients) {
-  const API_KEY = 'your-openai-api-key'; // Add your OpenAI API key here
+export async function fetchGPTResponse(prompt) {
   const API_URL = 'https://api.openai.com/v1/chat/completions';
+  const API_KEY = 'API_KEY'; 
 
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -9,15 +9,15 @@ export async function fetchGPTResponse(ingredients) {
       'Authorization': `Bearer ${API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-3.5-turbo', 
       messages: [
         {
           role: 'system',
-          content: 'You are a helpful assistant that provides recipe suggestions based on ingredients.',
+          content: 'You are a helpful assistant designed to output JSON.',
         },
         {
           role: 'user',
-          content: `Generate a list of recipes based on these ingredients: ${ingredients}. Each recipe should be in the format: { name: string, preparationMethod: string, nutritionalInformations: string }`,
+          content: `Generate a food recipe based on these ingredients: ${prompt}. The response must be JSON in the format: { preparationMethod: string, nutritionalInformations: string }`,
         },
       ],
     }),
