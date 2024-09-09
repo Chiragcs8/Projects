@@ -8,7 +8,7 @@ const AppComponent = () => {
   const [filteredRecipeList, setFilteredRecipeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [timeoutId, updateTimeoutId] = useState();
-  const [filter, setFilter] = useState('all'); // Added filter state
+  const [filter, setFilter] = useState('all');
 
   const onTextChange = (e) => {
     clearTimeout(timeoutId);
@@ -36,14 +36,14 @@ const AppComponent = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <header className="bg-black text-white w-full p-4 flex flex-col md:flex-row items-center md:items-start justify-between md:justify-start shadow-md">
+    <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
+      <header className="bg-black text-white w-full p-4 flex flex-col md:flex-row items-center md:items-start justify-between shadow-md">
         <div className="flex items-center mb-4 md:mb-0">
-          <img src="/hamburger.svg" alt="recipe icon" className="w-9 h-9 mr-3" />
+          <img src="/hamburger.svg" alt="recipe icon" className="w-8 h-8 md:w-9 md:h-9 mr-3" />
           <h1 className="text-xl font-bold">Recipe Finder</h1>
         </div>
         <div className="flex bg-white rounded-lg p-2 w-full md:w-1/2 lg:w-1/3">
-          <img src="/search-icon.svg" className="w-8 h-8" alt="search" />
+          <img src="/search-icon.svg" className="w-6 h-6 md:w-8 md:h-8" alt="search" />
           <input
             type="text"
             placeholder="Search Recipe"
@@ -74,17 +74,17 @@ const AppComponent = () => {
         </button>
       </div>
       {loading ? (
-        <div className="flex justify-center items-center h-96">
+        <div className="flex justify-center items-center h-64">
           <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
         </div>
       ) : (
-        <div className="flex flex-wrap justify-evenly p-8 gap-8">
+        <div className="flex flex-wrap justify-center p-4 gap-8">
           {filteredRecipeList?.length ? (
             filteredRecipeList.map((recipe, index) => (
               <RecipeComponent key={index} recipe={recipe.recipe} />
             ))
           ) : (
-            <img src="/hamburger.svg" alt="placeholder" className="w-40 h-40 opacity-50" />
+            <img src="/hamburger.svg" alt="placeholder" className="w-24 h-24 opacity-50" />
           )}
         </div>
       )}

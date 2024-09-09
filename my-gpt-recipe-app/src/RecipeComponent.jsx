@@ -1,51 +1,50 @@
 import React, { useState } from 'react';
 
-const RecipeComponent = (props) => {
-  const [show, setShow] = useState(false);
-  const { label, image, ingredientLines, url } = props.recipe;
+const RecipeComponent = ({ recipe }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const { label, image, ingredients, url } = recipe;
 
   return (
-    <div className="flex flex-col p-4 w-full sm:w-72 shadow-lg rounded-lg bg-white">
-      {show && (
-        <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-70">
-          <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-lg font-bold">{label}</h2>
-            <ul className="list-disc pl-5 mt-4">
-              {ingredientLines.map((ingredient, index) => (
-                <li key={index} className="text-gray-700">{ingredient}</li>
-              ))}
-            </ul>
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => window.open(url)}
-                className="bg-green-500 text-white px-4 py-2 rounded-lg uppercase"
-              >
-                See More
-              </button>
-              <button
-                onClick={() => setShow(false)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg uppercase"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      <img src={image} alt={label} className="object-cover h-48 rounded-lg mb-4" />
-      <h2 className="text-lg font-semibold text-center">{label}</h2>
+    <div className="bg-gray-200 p-4 rounded-lg shadow-lg flex flex-col items-center">
+      <img src={image} alt={label} className="w-full h-48 object-cover rounded-lg" />
+      <h2 className="text-lg font-bold mt-2">{label}</h2>
       <button
-        className="bg-green-500 text-white mt-4 py-2 rounded-lg uppercase w-full"
-        onClick={() => setShow(true)}
+        onClick={() => setShowModal(true)}
+        className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
       >
         Ingredients
       </button>
-      <button
-        className="bg-blue-500 text-white mt-2 py-2 rounded-lg uppercase w-full"
-        onClick={() => window.open(url)}
+      <a
+        href={url}
+        className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+        target="_self"
+        rel="noopener noreferrer"
       >
         See Complete Recipe
-      </button>
+      </a>
+      
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/3">
+            <h3 className="text-md font-bold mb-2">Ingredients for {label}</h3>
+            <ul className="space-y-2">
+              {ingredients.map((ingredient, index) => (
+                <li key={index} className="flex justify-between py-1 border-b">
+                  <span>{ingredient.text}</span>
+                  <span>{ingredient.weight}g</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
