@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-const APP_ID = '3bb602ac'; 
-const APP_KEY = 'ea43526d89f74b778b2c67fe19509e86';
+const APP_ID = 'LOL'; 
+const APP_KEY = 'LOL';
 
 export const fetchEdamamResponse = async (searchString) => {
   try {
