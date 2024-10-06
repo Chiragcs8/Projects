@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-const APP_ID = 'LOL'; 
-const APP_KEY = 'LOL';
+const APP_ID = String(import.meta.env.VITE_API_ID); 
+const APP_KEY = String(import.meta.env.VITE_API_KEY);
 
 export const fetchEdamamResponse = async (searchString) => {
   try {
