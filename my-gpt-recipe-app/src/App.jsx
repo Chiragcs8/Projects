@@ -39,11 +39,11 @@ const AppComponent = () => {
     <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
       <header className="bg-black text-white w-full p-4 flex flex-col md:flex-row items-center md:items-start justify-between shadow-md">
         <div className="flex items-center mb-4 md:mb-0">
-          <img src="/hamburger.svg" alt="recipe icon" className="w-8 h-8 md:w-9 md:h-9 mr-3" />
+          <img src="https://www.svgrepo.com/show/169724/burger.svg" alt="recipe icon" className="w-8 h-8 md:w-9 md:h-9 mr-3" />
           <h1 className="text-xl font-bold">Recipe Finder</h1>
         </div>
         <div className="flex bg-white rounded-lg p-2 w-full md:w-1/2 lg:w-1/3">
-          <img src="/search-icon.svg" className="w-6 h-6 md:w-8 md:h-8" alt="search" />
+          <img src="https://img.icons8.com/?size=100&id=112468&format=png&color=000000" className="w-6 h-6 md:w-8 md:h-8" alt="search" />
           <input
             type="text"
             placeholder="Search Recipe"
@@ -84,7 +84,7 @@ const AppComponent = () => {
               <RecipeComponent key={index} recipe={recipe.recipe} />
             ))
           ) : (
-            <img src="/hamburger.svg" alt="placeholder" className="w-24 h-24 opacity-50" />
+            <img src="https://www.svgrepo.com/show/169724/burger.svg" alt="placeholder" className="w-24 h-24 opacity-50" />
           )}
         </div>
       )}
